@@ -34,4 +34,6 @@ workRouter.delete('/:id/:techId', deleteTechStack);
 
 // get showcase by title
 workRouter.get("/:title", getShowcaseByTitle);
+// get showcase by id
+workRouter.get("/:id", getShowcaseById);
   
