@@ -26,6 +26,8 @@ workRouter.post(
 
   // Route for getting all showcases
 workRouter.get('/', getAllShowcases);
+ // Route for getting a  showcase
+workRouter.get('/:id'', getAllShowcases);
 
 
 // Route for deleting a specific showcase
