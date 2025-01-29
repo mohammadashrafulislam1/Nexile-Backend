@@ -26,7 +26,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Allow specific origins
-const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost:5173"];
+const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost:5173", "https://www.nexiledigital.com"];
 
 app.use(
   cors({
