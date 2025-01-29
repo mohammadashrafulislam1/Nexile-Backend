@@ -25,11 +25,16 @@ configDotenv();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({ origin: "https://nexile-dashboard.vercel.app" })); // Allow only your frontend
+// Allow specific origins
+const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost:5173"];
 
-
-// Middleware to parse JSON
-app.use(express.json());
+app.use(
+  cors({
+    origin: allowedOrigins, // Allow frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // ENDPOINT SETUP:
 app.use('/api/hero', heroRouter)
