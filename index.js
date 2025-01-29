@@ -25,24 +25,10 @@ configDotenv();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Allow multiple origins
-const allowedOrigins = [
-  "https://nexile-dashboard.vercel.app",
-  "http://localhost:5173"
-];
+app.use(cors({ origin: "https://nexile-dashboard.vercel.app" })); // Allow only your frontend
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // Allow cookies & authentication headers
-  })
-);
+// OR allow all origins (for testing only)
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
