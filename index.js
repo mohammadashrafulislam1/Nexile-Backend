@@ -31,6 +31,8 @@ const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost
 app.use(
   cors(({ origin: allowedOrigins, credentials: true }))
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ENDPOINT SETUP:
 app.use('/api/hero', heroRouter)

@@ -202,7 +202,7 @@ export const getShowcaseById = async (req, res) => {
       // Find the work document that contains the showcase with the specified title
       const work = await WorksModel.findOne({ title: formattedTitle });
   
-      console.log(work);
+      console.log("work", work);
   
       if (!work) {
         return res.status(404).json({ success: false, message: 'Work not found' });
@@ -290,8 +290,8 @@ export const deleteTechStack = async (req, res) => {
 export const deleteImage = async (req, res) => {
   try {
     const { id } = req.params; // Get the work ID from the request parameters
-    console.log(req.body);  // This will show the incoming request body
-    const { publicId } = req.body;
+    console.log("dlt img:", req.body);  // This will show the incoming request body
+    const publicId = req.body.publicId;
     if (!publicId) {
       return res.status(400).json({ message: "Missing publicId in the request body." });
     }
