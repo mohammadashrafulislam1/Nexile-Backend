@@ -197,7 +197,7 @@ export const getShowcaseById = async (req, res) => {
       const { title } = req.params; // Get the title from the request parameters
       
       // Replace dashes with spaces (if required)
-      const formattedTitle = title.replace(/-/g, " "); // Replace dashes with spaces
+      const formattedTitle = title.replace(/_/g, " "); // Replace dashes with spaces
   
       // Find the work document that contains the showcase with the specified title
       const work = await WorksModel.findOne({ title: formattedTitle });
