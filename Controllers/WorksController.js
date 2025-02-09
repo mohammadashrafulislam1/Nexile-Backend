@@ -234,15 +234,6 @@ export const deleteWork = async (req, res) => {
       
     }
 
-    // Delete tech stack images from Cloudinary
-    if (workToDelete.techStack && workToDelete.techStack.length > 0) {
-      for (const tech of workToDelete.techStack) {
-        if (tech.publicId) {
-          await cloudinary.uploader.destroy(tech.publicId); // Destroy tech stack image by public ID
-        }
-      }
-    }
-
     // Remove the work entry from the database
     await WorksModel.findByIdAndDelete(id);
     res.status(200).json({ success: true, message: 'Work deleted successfully' });
