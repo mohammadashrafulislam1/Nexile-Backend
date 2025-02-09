@@ -290,11 +290,15 @@ export const deleteTechStack = async (req, res) => {
 export const deleteImage = async (req, res) => {
   try {
     const { id } = req.params; // Get the work ID from the request parameters
-    const { publicId } = req.body; // Get the publicId from the request body
+    console.log(req.body);  // This will show the incoming request body
+    const { publicId } = req.body;
+    if (!publicId) {
+      return res.status(400).json({ message: "Missing publicId in the request body." });
+    }
 
     // Check if both ID and publicId are provided
-    if (!id || !publicId) {
-      return res.status(400).json({ success: false, message: 'Work ID and publicId are required' });
+    if (!id) {
+      return res.status(400).json({ success: false, message: 'Work ID is required' });
     }
 
     // Find the work entry by ID
