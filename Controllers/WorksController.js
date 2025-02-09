@@ -220,7 +220,6 @@ export const getShowcaseById = async (req, res) => {
 export const deleteWork = async (req, res) => {
   try {
     const { id } = req.params; // Get the ID from request parameters
-    const { publicId } = req.body; // Get publicId from request body
 
     // Find the work entry by ID
     const workToDelete = await WorksModel.findById(id);
@@ -229,9 +228,19 @@ export const deleteWork = async (req, res) => {
     }
 
     // Delete images from Cloudinary
-    if (publicId) {
-        await cloudinary.uploader.destroy(publicId); // Destroy the image by public ID
-      
+    if (workToDelete.images && workToDelete.images.length > 0) {
+      for (const image of workToDelete.images) {
+        await cloudinary.uploader.destroy(image.publicId); // Destroy the image by public ID
+      }
+    }
+
+    // Delete tech stack images from Cloudinary
+    if (workToDelete.techStack && workToDelete.techStack.length > 0) {
+      for (const tech of workToDelete.techStack) {
+        if (tech.publicId) {
+          await cloudinary.uploader.destroy(tech.publicId); // Destroy tech stack image by public ID
+        }
+      }
     }
 
     // Remove the work entry from the database
@@ -281,7 +290,7 @@ export const deleteTechStack = async (req, res) => {
 export const deleteImage = async (req, res) => {
   try {
     const { id } = req.params; // Get the work ID from the request parameters
-    const { publicId } = req.body; // Get the publicId from the request body
+    const { publicId } = req.body.data; // Get the publicId from the request body
 
     // Check if both ID and publicId are provided
     if (!id || !publicId) {
@@ -297,8 +306,6 @@ export const deleteImage = async (req, res) => {
     // Delete the image from Cloudinary
     await cloudinary.uploader.destroy(publicId);
 
-    // Optionally, remove the image reference from the database if it exists
-    workEntry.images = workEntry.images.filter(image => image.publicId !== publicId);
     await workEntry.save(); // Save the updated work entry
 
     return res.status(200).json({ success: true, message: 'Image deleted successfully' });
