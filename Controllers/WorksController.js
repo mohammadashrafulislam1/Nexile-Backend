@@ -290,7 +290,7 @@ export const deleteTechStack = async (req, res) => {
 export const deleteImage = async (req, res) => {
   try {
     const { id } = req.params; // Get the work ID from the request parameters
-    const { publicId } = req.body.data; // Get the publicId from the request body
+    const { publicId } = req.body; // Get the publicId from the request body
 
     // Check if both ID and publicId are provided
     if (!id || !publicId) {
