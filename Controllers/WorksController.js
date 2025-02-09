@@ -220,6 +220,7 @@ export const getShowcaseById = async (req, res) => {
 export const deleteWork = async (req, res) => {
   try {
     const { id } = req.params; // Get the ID from request parameters
+    const { publicId } = req.body; // Get publicId from request body
 
     // Find the work entry by ID
     const workToDelete = await WorksModel.findById(id);
@@ -228,10 +229,9 @@ export const deleteWork = async (req, res) => {
     }
 
     // Delete images from Cloudinary
-    if (workToDelete.images && workToDelete.images.length > 0) {
-      for (const image of workToDelete.images) {
-        await cloudinary.uploader.destroy(image.publicId); // Destroy the image by public ID
-      }
+    if (publicId) {
+        await cloudinary.uploader.destroy(publicId); // Destroy the image by public ID
+      
     }
 
     // Delete tech stack images from Cloudinary
