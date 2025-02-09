@@ -29,7 +29,7 @@ const port = process.env.PORT || 3000;
 const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost:5173", "https://www.nexiledigital.com"];
 
 app.use(
-  cors()
+  cors(({ origin: allowedOrigins, credentials: true }))
 );
 
 // ENDPOINT SETUP:
