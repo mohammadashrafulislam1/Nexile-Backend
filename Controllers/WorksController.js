@@ -309,6 +309,8 @@ export const deleteImage = async (req, res) => {
 
     // Delete the image from Cloudinary
     await cloudinary.uploader.destroy(publicId);
+// Remove the image from the database
+workEntry.images = workEntry.images.filter(img => img.publicId !== publicId);
 
     await workEntry.save(); // Save the updated work entry
 
