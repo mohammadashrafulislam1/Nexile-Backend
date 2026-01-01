@@ -26,11 +26,25 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Allow specific origins
-const allowedOrigins = ["https://nexile-dashboard.vercel.app", "http://localhost:5173", "https://www.nexiledigital.com"];
+const allowedOrigins = [
+  "https://nexile-dashboard.vercel.app",
+  "http://localhost:5173",
+  "https://www.nexiledigital.com"
+];
 
-app.use(
-  cors(({ origin: allowedOrigins, credentials: true }))
-);
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like Postman or server-to-server)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // allows cookies and authorization headers
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
